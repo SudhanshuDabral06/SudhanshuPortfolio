@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Vance | Systems & Full-Stack Software Engineer</title>
+  <meta name="description" content="Portfolio of Alex Vance - Software Engineering Intern candidate specializing in distributed systems, high-throughput APIs, and modern web architectures.">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            indigo: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            },
+            brand: {
+              blue: '#4338ca',
+              dark: '#0b0f19',
+              slate: '#64748b',
+              surface: '#f8fafc',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#fcfdfe] text-slate-900 font-sans antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- Floating Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl text-xs font-semibold">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <!-- STICKY TOP NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-white/90 border-b border-slate-200/80 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      
+      <!-- Left: Logo & Availability Badge -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="#" class="flex items-center gap-2 group">
+          <div class="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center font-mono text-xs font-bold group-hover:bg-indigo-700 transition-colors">
+            AV
+          </div>
+          <span class="font-bold text-slate-900 tracking-tight text-sm sm:text-base">Alex Vance</span>
+        </a>
+
+        <!-- Live Internship Availability Pill -->
+        <div class="hidden sm:inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Available for Summer 2025
+        </div>
+      </div>
+
+      <!-- Center: Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-600">
+        <a href="#about" class="nav-link hover:text-slate-900 transition-colors">About</a>
+        <a href="#skills" class="nav-link hover:text-slate-900 transition-colors">Skills</a>
+        <a href="#projects" class="nav-link hover:text-slate-900 transition-colors">Featured Projects</a>
+        <a href="#experience" class="nav-link hover:text-slate-900 transition-colors">Experience</a>
+        <a href="#contact" class="nav-link hover:text-slate-900 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right: Social Links & Download Resume CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="GitHub Profile">
+          <i data-lucide="github" class="w-4 h-4"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="LinkedIn Profile">
+          <i data-lucide="linkedin" class="w-4 h-4"></i>
+        </a>
+        
+        <button onclick="downloadResume()" class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-slate-950 hover:bg-slate-800 rounded-lg shadow-sm transition-all">
+          <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+          <span>Download Resume</span>
+          <span class="text-[10px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-300 font-mono">PDF</span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 hover:text-slate-900 focus:outline-none" aria-label="Toggle Navigation">
+        <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pt-3 pb-6 bg-white border-b border-slate-200 space-y-3">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold mb-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        Available for Summer 2025
+      </div>
+      <a href="#about" class="block py-1.5 text-sm font-semibold text-slate-700">About</a>
+      <a href="#skills" class="block py-1.5 text-sm font-semibold text-slate-700">Skills</a>
+      <a href="#projects" class="block py-1.5 text-sm font-semibold text-slate-700">Featured Projects</a>
+      <a href="#experience" class="block py-1.5 text-sm font-semibold text-slate-700">Experience</a>
+      <a href="#contact" class="block py-1.5 text-sm font-semibold text-slate-700">Contact</a>
+      <div class="pt-3 border-t border-slate-100 flex gap-2">
+        <button onclick="downloadResume()" class="w-full py-2.5 text-xs font-bold text-white bg-slate-950 rounded-lg flex items-center justify-center gap-2">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Resume (PDF)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="pt-16">
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-20 md:pt-16 md:pb-24 border-b border-slate-200/80 overflow-hidden bg-gradient-to-b from-white via-[#fcfdfe] to-[#f8fafc]">
+      <!-- Subtle Grid Background -->
+      <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-60 pointer-events-none"></div>
+
+      <div class="relative max-w-7xl mx-auto px-6">
+        
+        <!-- Status Pill Above Headline -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+            <span>Seeking Software Engineering Internships — Summer / Fall 2025</span>
+          </div>
+          <div class="text-xs text-slate-500 font-medium hidden sm:flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Targeting Full-Stack & Distributed Systems Squads</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <!-- Left Column: Copy & Actions -->
+          <div class="lg:col-span-7 space-y-6">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.12]">
+              Building robust distributed systems & fluid web experiences.
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl font-normal">
+              Hi, I'm <strong class="text-slate-900 font-semibold">Alex Vance</strong> — a senior Computer Science student & full-stack developer passionate about high-throughput backends, distributed data pipelines, and crisp web interfaces. Looking to ship high-impact code for forward-thinking engineering teams.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <a href="#projects" class="px-6 py-3 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-indigo-500/20 transition-all flex items-center gap-2">
+                <span>Explore Featured Projects</span>
+                <i data-lucide="arrow-down" class="w-4 h-4"></i>
+              </a>
+
+              <button onclick="downloadResume()" class="px-5 py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-semibold border border-slate-300 shadow-sm transition-all flex items-center gap-2">
+                <i data-lucide="file-check" class="w-4 h-4 text-slate-500"></i>
+                <span>Download Verified Resume</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Code Terminal -->
+          <div class="lg:col-span-5">
+            <div class="rounded-2xl bg-slate-950 text-slate-200 border border-slate-800 shadow-2xl overflow-hidden font-mono text-xs">
+              <!-- Terminal Header -->
+              <div class="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-rose-500/90"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500/90"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/90"></div>
+                </div>
+                <div class="text-[11px] text-slate-400 font-sans font-medium flex items-center gap-1.5">
+                  <i data-lucide="terminal" class="w-3.5 h-3.5 text-slate-400"></i>
+                  ~/terminal/engineer-profile.ts
+                </div>
+                <div class="text-[10px] text-slate-500">TypeScript</div>
+              </div>
+
+              <!-- Terminal Code Body -->
+              <div class="p-5 space-y-1.5 leading-relaxed overflow-x-auto text-[11.5px]">
+                <div><span class="text-indigo-400">interface</span> <span class="text-amber-300">CandidateProfile</span> {</div>
+                <div class="pl-4 text-slate-400">name: <span class="text-emerald-400">string</span>;</div>
+                <div class="pl-4 text-slate-400">role: <span class="text-emerald-400">string</span>;</div>
+                <div class="pl-4 text-slate-400">target: <span class="text-emerald-400">string</span>;</div>
+                <div class="pl-4 text-slate-400">coreStrengths: <span class="text-emerald-400">string[]</span>;</div>
+                <div class="pl-4 text-slate-400">readyToShip: <span class="text-rose-400">boolean</span>;</div>
+                <div>}</div>
+                <div class="pt-2"><span class="text-indigo-400">const</span> engineer: <span class="text-amber-300">CandidateProfile</span> = {</div>
+                <div class="pl-4"><span class="text-slate-300">name</span>: <span class="text-emerald-300">"Alex Vance"</span>,</div>
+                <div class="pl-4"><span class="text-slate-300">role</span>: <span class="text-emerald-300">"Full-Stack & Systems Engineer"</span>,</div>
+                <div class="pl-4"><span class="text-slate-300">target</span>: <span class="text-emerald-300">"Summer 2025 Internship"</span>,</div>
+                <div class="pl-4 text-slate-300"><span class="text-slate-300">coreStrengths</span>: [</div>
+                <div class="pl-8 text-amber-200">"High-throughput REST/gRPC APIs",</div>
+                <div class="pl-8 text-amber-200">"Database indexing & schema optimization",</div>
+                <div class="pl-8 text-amber-200">"Real-time event streams & WebSockets",</div>
+                <div class="pl-8 text-amber-200">"Production-ready TypeScript & React"</div>
+                <div class="pl-4 text-slate-300">],</div>
+                <div class="pl-4"><span class="text-slate-300">readyToShip</span>: <span class="text-emerald-400">true</span></div>
+                <div>};</div>
+              </div>
+
+              <!-- Terminal Footer Status Bar -->
+              <div class="px-4 py-2 bg-slate-900 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  Build status: passing (100% tests)
+                </span>
+                <span>UTF-8 • LF</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4-METRIC STRIP FOR RECRUITERS -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16 pt-10 border-t border-slate-200/80">
+          <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div class="text-3xl font-extrabold text-slate-950 tracking-tight">15,000+</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">Total Req/sec Stress Tested</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div class="text-3xl font-extrabold text-emerald-600 tracking-tight">Sub-40ms</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">p95 API Latency Benchmark</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div class="text-3xl font-extrabold text-slate-950 tracking-tight">4 Production</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">Full-Stack Systems Deployed</div>
+          </div>
+          <div class="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm">
+            <div class="text-3xl font-extrabold text-indigo-700 tracking-tight">Top 5%</div>
+            <div class="text-xs font-semibold text-slate-500 mt-1">CS Cohort | 3.91 Major GPA</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: CANDIDATE SNAPSHOT & READINESS -->
+    <section id="about" class="py-20 bg-[#fafbfc] border-b border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <div class="text-xs font-mono font-bold text-indigo-700 tracking-wider uppercase mb-1">01 / CANDIDATE SNAPSHOT</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">Engineer profile & readiness</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 max-w-md">
+            Academic background, verified technical values, and immediate team contribution profile.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Top Left: Academic & Bio Card -->
+          <div class="lg:col-span-7 p-7 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start gap-6">
+            <!-- Avatar Card -->
+            <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-indigo-700 to-indigo-900 text-white flex-shrink-0 flex items-center justify-center font-bold text-3xl shadow-md border-2 border-white">
+              AV
+            </div>
+            
+            <div class="space-y-3">
+              <div>
+                <span class="text-[11px] font-mono uppercase tracking-wider text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded">Candidate Profile</span>
+                <h3 class="text-xl font-bold text-slate-950 mt-1">University of Washington, Seattle</h3>
+                <p class="text-xs font-semibold text-slate-600">B.S. in Computer Science • Expected Graduation: June 2025</p>
+              </div>
+
+              <div class="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">
+                <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                Cumulative Major GPA: 3.91 / 4.00 (Dean's List)
+              </div>
+
+              <div class="pt-1">
+                <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Core CS Coursework</div>
+                <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                  Distributed Systems, Database System Internals, Operating Systems, Advanced Data Structures & Algorithms, Computer Networks, Software Engineering Practices.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Right: Technical Values & Production Standards -->
+          <div class="lg:col-span-5 p-7 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">Technical Values & Work Ethic</span>
+              <span class="p-1 rounded bg-emerald-50 text-emerald-600"><i data-lucide="shield-check" class="w-4 h-4"></i></span>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <div class="flex items-start gap-2.5">
+                <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mt-0.5 shrink-0">1</div>
+                <p><strong class="text-slate-900 font-semibold">Production-grade reliability first:</strong> Every endpoint is typed, validated with schemas, and backed by automated unit & integration test suites before merging.</p>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mt-0.5 shrink-0">2</div>
+                <p><strong class="text-slate-900 font-semibold">Data-first thinking:</strong> Profiling SQL queries with EXPLAIN ANALYZE, benchmarking p95/p99 latency, and choosing optimal composite indexes.</p>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <div class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold mt-0.5 shrink-0">3</div>
+                <p><strong class="text-slate-900 font-semibold">Ownership & rapid ramp-up:</strong> Self-directed engineer who reads documentation, asks high-leverage questions, and proactively unblocks technical hurdles.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Left: What I'm Looking For -->
+          <div class="lg:col-span-6 p-7 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-2">Target Roles & Environment</div>
+              <h4 class="text-base font-bold text-slate-950 mb-2">What I'm Looking For in an Internship</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Seeking a 12–16 week Software Engineering Internship for Summer 2025. Eager to embed in high-velocity engineering squads building mission-critical services, high-throughput consumer web platforms, or scalable backend infrastructure.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2 pt-5 border-t border-slate-100 mt-4">
+              <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-[11px] font-bold">FULL-STACK</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-[11px] font-bold">BACKEND SYSTEMS</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-[11px] font-bold">DISTRIBUTED CLOUD</span>
+            </div>
+          </div>
+
+          <!-- Bottom Right: Hiring Manager Checklist -->
+          <div class="lg:col-span-6 p-7 rounded-2xl bg-white border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="text-sm font-bold text-slate-950">Hiring Manager Quick Checklist</h4>
+              <span class="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-bold">VERIFIED</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="text-[10px] text-slate-400 uppercase font-mono font-bold">Work Auth</div>
+                <div class="font-bold text-slate-900 mt-0.5">US Citizen</div>
+                <div class="text-[10px] text-slate-500">No sponsorship needed</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="text-[10px] text-slate-400 uppercase font-mono font-bold">Availability</div>
+                <div class="font-bold text-slate-900 mt-0.5">40 Hours / Week</div>
+                <div class="text-[10px] text-slate-500">June – September 2025</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="text-[10px] text-slate-400 uppercase font-mono font-bold">Locations</div>
+                <div class="font-bold text-slate-900 mt-0.5">SF, Seattle, NYC</div>
+                <div class="text-[10px] text-slate-500">Or 100% Remote</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="text-[10px] text-slate-400 uppercase font-mono font-bold">Collaboration</div>
+                <div class="font-bold text-slate-900 mt-0.5">Git, CI/CD, Agile</div>
+                <div class="text-[10px] text-slate-500">Production ready</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: FULL STACK CAPABILITY MATRIX -->
+    <section id="skills" class="py-20 bg-white border-b border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Section Header with Category Tabs -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div>
+            <div class="text-xs font-mono font-bold text-indigo-700 tracking-wider uppercase mb-1">02 / TECHNICAL TOOLKIT</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">Full stack capability matrix</h2>
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-xs font-semibold" id="skill-filter-tabs">
+            <button class="skill-tab active-skill-tab px-3.5 py-1.5 rounded-lg transition-all" data-category="all">ALL SKILLS</button>
+            <button class="skill-tab px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all" data-category="backend">BACKEND & SYSTEMS</button>
+            <button class="skill-tab px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all" data-category="frontend">FRONTEND UX</button>
+            <button class="skill-tab px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all" data-category="database">DATABASES & ORM</button>
+            <button class="skill-tab px-3.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition-all" data-category="devops">DEVOPS/CLOUD</button>
+          </div>
+        </div>
+
+        <!-- 6 Skills Matrix Cards (3x2 Grid) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skills-grid">
+          
+          <!-- Card 1: TypeScript & Full-Stack Web -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="frontend">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                <i data-lucide="layout" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">PRIMARY STACK</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">TypeScript & Full-Stack Web</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">4+ Years Project Experience</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Production development with modern TypeScript, React 19, Next.js App Router, and Tailwind CSS. Obsessed with core web vitals, accessible design, and responsive fluid layout.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">TypeScript</span>
+              <span class="skill-pill">React</span>
+              <span class="skill-pill">Next.js</span>
+              <span class="skill-pill">Tailwind CSS</span>
+              <span class="skill-pill">Zustand</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Node.js & Go Backend APIs -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="backend">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <i data-lucide="server" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">HIGH VELOCITY</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">Node.js & Go Backend APIs</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">Concurrent & RESTful Services</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Engineered scalable REST and gRPC microservices using Go and Node.js. Built custom JWT session rotation, token bucket rate limiters, and real-time WebSocket communication.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">Node.js</span>
+              <span class="skill-pill">Go (Golang)</span>
+              <span class="skill-pill">Express</span>
+              <span class="skill-pill">gRPC</span>
+              <span class="skill-pill">WebSockets</span>
+            </div>
+          </div>
+
+          <!-- Card 3: PostgreSQL & Database Architecture -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="database">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                <i data-lucide="database" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded">PRODUCTION TESTED</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">PostgreSQL & Database Architecture</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">Relational & Key-Value Stores</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Hands-on data modeling, ACID compliance, composite indexing, query execution plan tuning with EXPLAIN ANALYZE, and Redis sub-millisecond caching layers.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">PostgreSQL</span>
+              <span class="skill-pill">Redis</span>
+              <span class="skill-pill">Prisma ORM</span>
+              <span class="skill-pill">PgBouncer</span>
+              <span class="skill-pill">SQL Profiling</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Distributed Systems & Messaging -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="backend">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                <i data-lucide="network" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">ADVANCED CONCEPTS</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">Distributed Systems & Messaging</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">Queues & Event Streams</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Asynchronous task processing with Redis BullMQ and Kafka streaming. Practical understanding of idempotent consumer patterns, dead-letter queues, and backpressure handling.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">Kafka</span>
+              <span class="skill-pill">RabbitMQ</span>
+              <span class="skill-pill">BullMQ</span>
+              <span class="skill-pill">Redis Streams</span>
+              <span class="skill-pill">Microservices</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Docker & CI/CD Pipelines -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="devops">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center">
+                <i data-lucide="container" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-slate-700 bg-slate-100 border border-slate-300 px-2 py-0.5 rounded">DEVOPS READY</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">Docker & CI/CD Pipelines</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">Automated Test & Deployment</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Multi-stage Docker containers optimized for lean image layers. Configured automated linting, test suites, and preview environment triggers with GitHub Actions.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">Docker</span>
+              <span class="skill-pill">Docker Compose</span>
+              <span class="skill-pill">GitHub Actions</span>
+              <span class="skill-pill">Linux/Bash</span>
+              <span class="skill-pill">AWS S3/ECS</span>
+            </div>
+          </div>
+
+          <!-- Card 6: Testing, Observability & Security -->
+          <div class="skill-card p-6 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all" data-domain="backend">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">STANDARDS DRIVEN</span>
+            </div>
+            
+            <h3 class="text-base font-bold text-slate-950">Testing, Observability & Security</h3>
+            <p class="text-xs font-medium text-slate-500 mb-3">Test-Driven Development</p>
+            
+            <p class="text-xs text-slate-600 leading-relaxed mb-5">
+              Robust test suites using Vitest, Jest, and Supertest. Telemetry instrumentation with Prometheus, OpenTelemetry tracing, and adherence to OWASP security fundamentals.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-200/80">
+              <span class="skill-pill">Jest/Vitest</span>
+              <span class="skill-pill">Supertest</span>
+              <span class="skill-pill">Prometheus</span>
+              <span class="skill-pill">OpenTelemetry</span>
+              <span class="skill-pill">OWASP Top 10</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: FEATURED ENGINEERING PROJECTS -->
+    <section id="projects" class="py-20 bg-[#fafbfc] border-b border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <div class="text-xs font-mono font-bold text-indigo-700 tracking-wider uppercase mb-1">03 / SELECTED PORTFOLIO</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">Featured engineering projects</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 max-w-md">
+            Architected from zero with live demos, benchmark telemetry, and verified open-source repositories.
+          </p>
+        </div>
+
+        <!-- Featured Project 1: CloudPulse (Big Full Width Showcase Card) -->
+        <div class="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-md mb-8">
+          
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="badge-tag">DISTRIBUTED SYSTEMS</span>
+            <span class="badge-tag">TIME-SERIES DATA</span>
+            <span class="badge-tag">WEBSOCKETS</span>
+            <span class="badge-tag">REACT / NEXT.JS</span>
+            <span class="badge-tag">GO BACKEND</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Info & Metrics -->
+            <div class="lg:col-span-7 space-y-5">
+              <div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+                  CloudPulse — Distributed Real-Time Telemetry Dashboard
+                </h3>
+                <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                  High-throughput telemetry ingestion platform designed to stream and visualize CPU/memory metrics across distributed server nodes with sub-50ms latency.
+                </p>
+              </div>
+
+              <!-- Key Engineering Highlights Box -->
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2.5 text-xs text-slate-700">
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong class="text-slate-900">Ingestion throughput:</strong> Built Go ingestion server handling 15,000+ data points/sec using goroutine worker pools and non-blocking I/O.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong class="text-slate-900">Sliding-window caching:</strong> Engineered Redis time-series ring buffer, shrinking database write load by 62% and keeping query times under 15ms.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span><strong class="text-slate-900">Zero-frame-drop UI:</strong> Implemented live chart rendering via HTML5 Canvas and WebSockets, sustaining 60 FPS under continuous 100ms push updates.</span>
+                </div>
+              </div>
+
+              <!-- Action Links -->
+              <div class="flex flex-wrap items-center gap-3 pt-2">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 transition-colors">
+                  <i data-lucide="github" class="w-4 h-4"></i>
+                  <span>View Source Code</span>
+                </a>
+                <a href="https://demo.example.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                  <i data-lucide="external-link" class="w-4 h-4 text-slate-500"></i>
+                  <span>Live Demo System</span>
+                </a>
+                <button onclick="showToast('Loading system architecture report...')" class="text-xs text-indigo-700 hover:text-indigo-900 font-semibold px-2 py-1">
+                  Architecture Writeup →
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Telemetry Preview Graph Card -->
+            <div class="lg:col-span-5 p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-indigo-950 text-white border border-slate-800 shadow-xl">
+              <div class="flex items-center justify-between text-xs mb-4">
+                <div class="font-mono text-slate-300 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Ingestion Rate (req/sec)
+                </div>
+                <span class="text-emerald-400 font-mono text-[11px] bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">Live P99: 28ms</span>
+              </div>
+
+              <!-- SVG Animated Line Chart -->
+              <div class="relative h-40 w-full mb-4">
+                <svg class="w-full h-full overflow-visible" viewBox="0 0 300 120" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.5" />
+                      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.0" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Background grid lines -->
+                  <line x1="0" y1="30" x2="300" y2="30" stroke="#334155" stroke-dasharray="3 3" stroke-width="0.7" />
+                  <line x1="0" y1="60" x2="300" y2="60" stroke="#334155" stroke-dasharray="3 3" stroke-width="0.7" />
+                  <line x1="0" y1="90" x2="300" y2="90" stroke="#334155" stroke-dasharray="3 3" stroke-width="0.7" />
+
+                  <!-- Area Fill -->
+                  <polygon points="0,100 20,85 50,90 80,60 110,75 140,40 170,55 200,30 230,45 260,25 300,15 300,120 0,120" fill="url(#chartGradient)" />
+
+                  <!-- Foreground Spline Curve -->
+                  <polyline points="0,100 20,85 50,90 80,60 110,75 140,40 170,55 200,30 230,45 260,25 300,15" fill="none" stroke="#a5b4fc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+                  <!-- Active Live Dot -->
+                  <circle cx="300" cy="15" r="4" fill="#38bdf8" />
+                  <circle cx="300" cy="15" r="8" fill="#38bdf8" opacity="0.3" class="animate-ping" />
+                </svg>
+              </div>
+
+              <!-- Quick stats inside card -->
+              <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-800 text-xs">
+                <div>
+                  <div class="text-[10px] text-slate-400 font-mono">THROUGHPUT</div>
+                  <div class="text-base font-bold text-white">15,000+ / sec</div>
+                </div>
+                <div>
+                  <div class="text-[10px] text-slate-400 font-mono">LATENCY (P95)</div>
+                  <div class="text-base font-bold text-emerald-400">&lt;40ms</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Bottom 2 Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Project 2: DevFlow -->
+          <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="badge-tag">CRDTS</span>
+                <span class="badge-tag">WEBSOCKETS</span>
+                <span class="badge-tag">TYPESCRIPT</span>
+                <span class="badge-tag">REACT</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-950 mb-2">DevFlow — Conflict-Free Collaborative Markdown Canvas</h3>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Real-time collaborative text editor built on Conflict-free Replicated Data Types (Yjs). Allows multiple distributed users to simultaneously edit documents with zero conflicts.
+              </p>
+
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-700 space-y-1.5 mb-5">
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span>Custom peer-to-peer WebSocket synchronization protocol with offline editing resilience.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span>Full AST parsing with syntax highlighting and instant PDF/HTML export engine.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-700 hover:text-slate-950 inline-flex items-center gap-1.5">
+                <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                Source Code
+              </a>
+              <a href="https://demo.example.com" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900 inline-flex items-center gap-1">
+                Live App
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 3: AtlasStore -->
+          <div class="p-7 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                <span class="badge-tag">GO</span>
+                <span class="badge-tag">CHUNK ENCRYPTION</span>
+                <span class="badge-tag">REST API</span>
+                <span class="badge-tag">DOCKER</span>
+              </div>
+              <h3 class="text-xl font-bold text-slate-950 mb-2">AtlasStore — Secure P2P Encrypted File Distribution</h3>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Zero-knowledge decentralized file storage system splitting payloads into AES-256 encrypted chunks across redundant storage nodes with automated checksum verification.
+              </p>
+
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-700 space-y-1.5 mb-5">
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span>Content-addressable storage hashing (SHA-256) preventing duplicate chunk allocation.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5"></i>
+                  <span>Resilient chunk reassembly pipeline with parallel range queries and retry policies.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-700 hover:text-slate-950 inline-flex items-center gap-1.5">
+                <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                Source Code
+              </a>
+              <a href="https://demo.example.com" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900 inline-flex items-center gap-1">
+                Live System
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRACTICAL EXPERIENCE TIMELINE -->
+    <section id="experience" class="py-20 bg-white border-b border-slate-200/80">
+      <div class="max-w-5xl mx-auto px-6">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div>
+            <div class="text-xs font-mono font-bold text-indigo-700 tracking-wider uppercase mb-1">04 / WORK & ACADEMICS</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight">Practical experience timeline</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 max-w-sm">
+            Internships, instructional leadership, and technical community roles.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          
+          <!-- Experience Card 1 -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">SOFTWARE ENGINEERING INTERN (CONTRACT)</span>
+              </div>
+              <span class="text-xs font-mono font-semibold text-slate-500">May 2024 – Aug 2024</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-950">High-Throughput Ingestion Systems @ DataLoop Technologies</h3>
+            <p class="text-xs text-indigo-700 font-medium mb-4">Remote / Seattle, WA • Go, PostgreSQL, Redis, Docker, Apache Kafka</p>
+
+            <ul class="text-xs text-slate-600 space-y-2 leading-relaxed list-disc list-inside">
+              <li>Spearheaded redesign of asynchronous event webhook pipeline, reducing end-to-end processing latency from 420ms to 68ms under peak traffic.</li>
+              <li>Authored comprehensive integration test harnesses using Testcontainers-Go, boosting pipeline test coverage from 64% to 91%.</li>
+              <li>Built real-time monitoring dashboards in Grafana with Prometheus metrics, giving the on-call team instant visibility into queue depth and dropped packets.</li>
+            </ul>
+          </div>
+
+          <!-- Experience Card 2 -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">UNDERGRADUATE TEACHING ASSISTANT</span>
+              </div>
+              <span class="text-xs font-mono font-semibold text-slate-500">Jan 2024 – Present</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-950">Data Structures & Algorithms @ Department of Computer Science</h3>
+            <p class="text-xs text-indigo-700 font-medium mb-4">University of Washington • C++, Java, Python, Algorithmic Analysis</p>
+
+            <ul class="text-xs text-slate-600 space-y-2 leading-relaxed list-disc list-inside">
+              <li>Lead weekly discussion sections and code labs for 65+ sophomore CS students covering graphs, dynamic programming, and balanced BSTs.</li>
+              <li>Conducted 120+ hours of 1-on-1 architecture consultations and debugging sessions, mentoring students on clean OOP patterns and time/space complexity optimization.</li>
+            </ul>
+          </div>
+
+          <!-- Experience Card 3 -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-[#fafbfc] border border-slate-200 hover:border-slate-300 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">OPEN SOURCE & STUDENT LEADERSHIP</span>
+              </div>
+              <span class="text-xs font-mono font-semibold text-slate-500">2023 – Present</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-950">Hackathon Tech Lead @ ACM Student Chapter</h3>
+            <p class="text-xs text-indigo-700 font-medium mb-4">ACM Chapter • TypeScript, Next.js, Supabase, Tailwind CSS</p>
+
+            <ul class="text-xs text-slate-600 space-y-2 leading-relaxed list-disc list-inside">
+              <li>Built and maintained the registration portal supporting 800+ hackathon attendees with automated QR check-in and dynamic schedule streaming.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: CONTACT & RECRUITMENT INQUIRY -->
+    <section id="contact" class="py-20 bg-[#fafbfc]">
+      <div class="max-w-7xl mx-auto px-6">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          <!-- Left: Narrative & Contact Meta -->
+          <div class="lg:col-span-5 space-y-6">
+            <div>
+              <div class="text-xs font-mono font-bold text-indigo-700 tracking-wider uppercase mb-1">05 / CONTACT & HIRING</div>
+              <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-950 tracking-tight leading-tight">
+                Let's discuss your 2025 engineering team needs.
+              </h2>
+              <p class="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed">
+                I am actively interviewing for 2025/2026 Software Engineering Internships. If you are looking for an engineer with high agency, strong CS foundations, and production-tested skills, let's talk.
+              </p>
+            </div>
+
+            <!-- Direct Email Highlight Box -->
+            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+              <div class="text-[11px] font-mono font-bold text-slate-400 uppercase">Direct Email Contact</div>
+              <div class="text-sm font-bold text-slate-900 break-all font-mono">alex.vance.dev@gmail.com</div>
+              <button onclick="copyEmail()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold transition-colors">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Copy Email Address</span>
+              </button>
+            </div>
+
+            <!-- Quick Expectations List -->
+            <div class="space-y-2.5 text-xs text-slate-600">
+              <div class="flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
+                <span>Response time: Typically under 12 hours</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
+                <span>Phone / WhatsApp: Available upon request</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="code-2" class="w-4 h-4 text-emerald-600"></i>
+                <span>Open to technical screening & take-home challenges</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Recruitment Inquiry Form Card -->
+          <div class="lg:col-span-7">
+            <div class="p-8 sm:p-9 rounded-3xl bg-white border border-slate-200 shadow-md">
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <h3 class="text-lg font-bold text-slate-950">Send Direct Recruitment Inquiry</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Direct line to Alex's personal inbox</p>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              </div>
+
+              <form id="recruitment-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Name *</label>
+                    <input type="text" id="form-name" required placeholder="e.g. Sarah Connor" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Work Email *</label>
+                    <input type="email" id="form-email" required placeholder="sarah@company.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all">
+                  </div>
+                </div>
+
+                <!-- Opportunity Type Pills -->
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Opportunity Type</label>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="opportunity-selector">
+                    <button type="button" class="opp-pill active-opp text-[11px] font-semibold py-2 px-2.5 rounded-lg border text-center transition-all">
+                      Summer 2025
+                    </button>
+                    <button type="button" class="opp-pill text-[11px] font-semibold py-2 px-2.5 rounded-lg border border-slate-200 text-slate-600 hover:border-slate-300 text-center transition-all">
+                      Fall 2025 Co-op
+                    </button>
+                    <button type="button" class="opp-pill text-[11px] font-semibold py-2 px-2.5 rounded-lg border border-slate-200 text-slate-600 hover:border-slate-300 text-center transition-all">
+                      Full-Time 2025
+                    </button>
+                    <button type="button" class="opp-pill text-[11px] font-semibold py-2 px-2.5 rounded-lg border border-slate-200 text-slate-600 hover:border-slate-300 text-center transition-all">
+                      Other Inquiry
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Message / Team Overview *</label>
+                  <textarea id="form-message" rows="4" required placeholder="Hi Alex, we'd like to invite you for a 30-min technical conversation regarding our engineering opening..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all resize-none"></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full py-3.5 px-6 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2">
+                  <span id="submit-btn-text">Send Direct Recruitment Inquiry</span>
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+              </form>
+
+              <!-- Success Alert Message -->
+              <div id="form-success-banner" class="hidden mt-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold text-center">
+                ✓ Message received! Alex will follow up within 12 hours.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-12 bg-white border-t border-slate-200/80 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-6 space-y-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-md bg-slate-900 text-white flex items-center justify-center font-mono text-xs font-bold">AV</div>
+          <span class="font-bold text-slate-900">Alex Vance</span>
+          <span class="text-slate-400">• Full-Stack Systems Engineer</span>
+        </div>
+
+        <div class="flex items-center gap-6 font-medium text-slate-600">
+          <a href="#about" class="hover:text-slate-900 transition-colors">About</a>
+          <a href="#skills" class="hover:text-slate-900 transition-colors">Skills</a>
+          <a href="#projects" class="hover:text-slate-900 transition-colors">Projects</a>
+          <a href="#experience" class="hover:text-slate-900 transition-colors">Experience</a>
+          <a href="#contact" class="hover:text-slate-900 transition-colors">Contact</a>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400">
+        <div>Built with HTML5, Tailwind CSS, & Vanilla JS • Sub-100ms load time • All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-slate-700">GitHub</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-slate-700">LinkedIn</a>
+          <a href="mailto:alex.vance.dev@gmail.com" class="hover:text-slate-700">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script>
+    // Initialize icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
